@@ -1,0 +1,25 @@
+{ "build_systems":
+  [ { "file_regex": "^([^\n:]+):([0-9]+):([0-9]+): (.*)$"
+    , "name": "Humidity"
+    , "cmd": "make"
+    , "variants":
+      [ { "name": "Clean"
+        , "cmd": ["make","clean"]
+        }
+      , { "name": "Test"
+        , "cmd": ["make","unittests","clean-unittests"]
+        }
+      , { "name": "Install"
+        , "cmd": ["make","install"]
+        }
+      ]
+    , "working_dir": "${project_path}"
+    }
+  ]
+, "folders":
+  [ { "path": "."
+    , "folder_exclude_patterns": ["build"]
+    , "file_exclude_patterns": ["*.elf","*.map"]
+    }
+  ]
+}
