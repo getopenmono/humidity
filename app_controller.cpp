@@ -1,6 +1,6 @@
 #include "app_controller.h"
 #include "lib/dht.hpp"
-#include <ptmono30.h>
+#include <Fonts/FreeSans24pt7b.h>
 #include <cmath>
 using mono::geo::Rect;
 using mono::IApplicationContext;
@@ -17,7 +17,7 @@ AppController::AppController ()
     sleeper(120*1000),
     measure(3*1000),
     toucher(this),
-    sensor(J_RING1,50,27,70,50+80+5*8*(50+70)),
+    sensor(J_RING2,50,27,70,50+80+5*8*(50+70)),
     metric(true),
     humidityLabel(Rect(0,10,176,20),HUMIDITY_HUMIDITY_LABEL),
     humidityValueLabel(Rect(0,30,176,42),"--.--"),
@@ -44,13 +44,13 @@ void AppController::setupUi ()
     humidityLabel.setAlignment(TextLabelView::ALIGN_CENTER);
     humidityLabel.setTextColor(TurquoiseColor);
     humidityValueLabel.setAlignment(TextLabelView::ALIGN_CENTER);
-    humidityValueLabel.setFont(PT_Mono_30);
+    humidityValueLabel.setFont(FreeSans24pt7b);
     humidityValueLabel.setTextColor(AlizarinColor);
     temperatureLabel.setAlignment(TextLabelView::ALIGN_CENTER);
     temperatureLabel.setTextColor(TurquoiseColor);
     temperatureLabel.setAlignment(TextLabelView::ALIGN_CENTER);
     temperatureValueLabel.setAlignment(TextLabelView::ALIGN_CENTER);
-    temperatureValueLabel.setFont(PT_Mono_30);
+    temperatureValueLabel.setFont(FreeSans24pt7b);
     temperatureValueLabel.setTextColor(AlizarinColor);
     statusLabel.setAlignment(TextLabelView::ALIGN_CENTER);
     humidityLabel.show();
