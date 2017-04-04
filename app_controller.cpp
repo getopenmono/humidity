@@ -18,6 +18,7 @@ AppController::AppController ()
     measure(3*1000),
     toucher(this),
     sensor(J_RING2,50,27,70,50+80+5*8*(50+70)),
+    button(J_RING1,PullUp),
     metric(true),
     humidityLabel(Rect(0,10,176,20),HUMIDITY_HUMIDITY_LABEL),
     humidityValueLabel(Rect(0,30,176,42),"--.--"),
@@ -37,6 +38,13 @@ void AppController::setJackTipTo3V3 ()
     DigitalOut(VAUX_EN,1);
     DigitalOut(VAUX_SEL,1);
     DigitalOut(JPO_nEN,0);
+}
+
+void AppController::setUpButtonHandler ()
+{
+    button.setDebouncing(true);
+    button.rise(this,&AppController::handleClick);
+    button.setInterruptsSleep(true);
 }
 
 void AppController::setupUi ()
@@ -79,6 +87,7 @@ void AppController::monoWakeFromSleep ()
 {
     setupTimersAndHandler();
     setJackTipTo3V3();
+    setUpButtonHandler();
     setupUi();
 }
 
@@ -158,6 +167,11 @@ void AppController::updateUi (float temperatureC, float humidity)
 }
 
 void AppController::handleTouch ()
+{
+    handleClick();
+}
+
+void AppController::handleClick ()
 {
     metric = !metric;
     async(this,&AppController::handleReading);
