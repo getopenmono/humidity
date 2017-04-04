@@ -21,9 +21,9 @@ AppController::AppController ()
     button(J_RING1,PullUp),
     metric(true),
     humidityLabel(Rect(0,10,176,20),HUMIDITY_HUMIDITY_LABEL),
-    humidityValueLabel(Rect(0,30,176,42),"--.--"),
-    temperatureLabel(Rect(0,80,176,20),HUMIDITY_TEMPERATURE_LABEL),
-    temperatureValueLabel(Rect(0,100,176,42),"--.--"),
+    humidityValueLabel(Rect(0,35,176,42),"--.--"),
+    temperatureLabel(Rect(0,95,176,20),HUMIDITY_TEMPERATURE_LABEL),
+    temperatureValueLabel(Rect(0,120,176,42),"--.--"),
     statusLabel(Rect(0,190,176,20),"starting...")
 {
 }
