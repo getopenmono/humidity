@@ -2,8 +2,8 @@
 #define app_controller_h
 
 #include <mono.h>
+#include <onewire.h>
 #include "toucher.hpp"
-#include "onewire.hpp"
 
 class AppController
 :
@@ -13,7 +13,7 @@ class AppController
     mono::Timer measure;
     Toucher toucher;
     uint8_t buffer[5];
-    OneWire sensor;
+    mono::io::OneWire sensor;
     mono::QueueInterrupt button;
     bool metric;
     mono::ui::TextLabelView humidityLabel;
