@@ -1,4 +1,4 @@
-MONO_PATH=/usr/local/openmono
+MONO_PATH=$(subst \,/,$(shell monomake path --bare))
 include $(MONO_PATH)/predefines.mk
 
 TARGET=humidity
@@ -9,4 +9,3 @@ OBJECTS = \
 
 include $(MONO_PATH)/mono.mk
 include Makefile.test
-
