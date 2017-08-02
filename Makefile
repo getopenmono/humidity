@@ -8,4 +8,3 @@ OBJECTS = \
 	$(patsubst %.cpp,%.o,$(wildcard *.cpp))
 
 include $(MONO_PATH)/mono.mk
-include Makefile.test

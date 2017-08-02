@@ -1,13 +1,13 @@
 #include "app_controller.h"
-#include "lib/dht.hpp"
+#include <dht.h>
 #include <Fonts/FreeSans24pt7b.h>
 #include <cmath>
 using mono::geo::Rect;
 using mono::IApplicationContext;
-using mono::io::DigitalOut;
 using mono::String;
 using mono::Timer;
 using mono::ui::TextLabelView;
+using namespace mono::sensor::dht;
 
 #define HUMIDITY_HUMIDITY_LABEL "humidity"
 #define HUMIDITY_TEMPERATURE_LABEL "temperature"
@@ -35,9 +35,9 @@ void AppController::monoWakeFromReset ()
 
 void AppController::setJackTipTo3V3 ()
 {
-    DigitalOut(VAUX_EN,1);
-    DigitalOut(VAUX_SEL,1);
-    DigitalOut(JPO_nEN,0);
+    mono::io::DigitalOut(VAUX_EN,1);
+    mono::io::DigitalOut(VAUX_SEL,1);
+    mono::io::DigitalOut(JPO_nEN,0);
 }
 
 void AppController::setUpButtonHandler ()
@@ -50,16 +50,16 @@ void AppController::setUpButtonHandler ()
 void AppController::setupUi ()
 {
     humidityLabel.setAlignment(TextLabelView::ALIGN_CENTER);
-    humidityLabel.setTextColor(TurquoiseColor);
+    humidityLabel.setText(TurquoiseColor);
     humidityValueLabel.setAlignment(TextLabelView::ALIGN_CENTER);
     humidityValueLabel.setFont(FreeSans24pt7b);
-    humidityValueLabel.setTextColor(AlizarinColor);
+    humidityValueLabel.setText(AlizarinColor);
     temperatureLabel.setAlignment(TextLabelView::ALIGN_CENTER);
-    temperatureLabel.setTextColor(TurquoiseColor);
+    temperatureLabel.setText(TurquoiseColor);
     temperatureLabel.setAlignment(TextLabelView::ALIGN_CENTER);
     temperatureValueLabel.setAlignment(TextLabelView::ALIGN_CENTER);
     temperatureValueLabel.setFont(FreeSans24pt7b);
-    temperatureValueLabel.setTextColor(AlizarinColor);
+    temperatureValueLabel.setText(AlizarinColor);
     statusLabel.setAlignment(TextLabelView::ALIGN_CENTER);
     humidityLabel.show();
     humidityValueLabel.show();
@@ -71,9 +71,9 @@ void AppController::setupUi ()
 void AppController::setupTimersAndHandler ()
 {
     sleeper.setCallback(IApplicationContext::EnterSleepMode);
-    sleeper.Start();
+    sleeper.start();
     measure.setCallback<AppController>(this,&AppController::requestSensorReading);
-    measure.Start();
+    measure.start();
 }
 
 void AppController::monoWillGotoSleep ()
@@ -98,8 +98,8 @@ void AppController::turnOffJackTipVcc ()
 
 void AppController::stopTimers ()
 {
-    sleeper.Stop();
-    measure.Stop();
+    sleeper.stop();
+    measure.stop();
 }
 
 void AppController::requestSensorReading ()
@@ -110,24 +110,24 @@ void AppController::requestSensorReading ()
 void AppController::handleReading ()
 {
     debugLine(String::Format("%02X %02X %02X %02X",buffer[0],buffer[1],buffer[2],buffer[3]));
-    dht::SensorType type = dht::guessSensorType(buffer,5);
+    SensorType type = guessSensorType(buffer,5);
     float temperature = NAN;
     float humidity = NAN;
     switch (type)
     {
         default:
-        case dht::Unknown:
+        case Unknown:
             statusLabel.setText("no reading");
             break;
-        case dht::DHT22:
+        case DHT22:
             statusLabel.setText("DHT22");
-            temperature = dht::dht22::getTemperatureC(buffer,5);
-            humidity = dht::dht22::getHumidity(buffer,5);
+            temperature = dht22::getTemperatureC(buffer,5);
+            humidity = dht22::getHumidity(buffer,5);
             break;
-        case dht::DHT11:
+        case DHT11:
             statusLabel.setText("DHT11");
-            temperature = dht::dht11::getTemperatureC(buffer,5);
-            humidity = dht::dht11::getHumidity(buffer,5);
+            temperature = dht11::getTemperatureC(buffer,5);
+            humidity = dht11::getHumidity(buffer,5);
             break;
     }
     updateUi(temperature,humidity);

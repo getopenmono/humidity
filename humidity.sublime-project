@@ -6,9 +6,6 @@
       [ { "name": "Clean"
         , "cmd": ["make","clean"]
         }
-      , { "name": "Test"
-        , "cmd": ["make","unittests","clean-unittests"]
-        }
       , { "name": "Install"
         , "cmd": ["make","install"]
         }
