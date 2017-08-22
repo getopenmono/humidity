@@ -7,7 +7,7 @@ Toucher::Toucher (AppController * app)
 {
 }
 
-void Toucher::RespondTouchEnd (mono::TouchEvent & unused)
+void Toucher::respondTouchBegin (mono::TouchEvent & unused)
 {
 	ctrl->handleTouch();
 }

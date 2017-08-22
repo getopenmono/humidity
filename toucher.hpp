@@ -11,7 +11,7 @@ class Toucher
 	AppController * ctrl;
 public:
 	Toucher (AppController *);
-	void RespondTouchEnd (mono::TouchEvent &);
+	void respondTouchBegin (mono::TouchEvent &);
 };
 
 #endif // __com_openmono_toucher_h
